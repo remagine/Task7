@@ -2,32 +2,25 @@ package commandandtag;
 
 public class Tag implements Comparable<Tag> {
     private final int id;
-    private int failCnt;
 
-    public Tag(int id) {
-        this.id = id;
-    }
-
-    public static Tag from(String input) {
-        int id = Integer.parseInt(input);
-        return new Tag(id);
-    }
-
-    public static Tag checkValidTag(Tag tag){
-        if(tag == null){
-            return new Tag(0);
+    public Tag(int number) {
+        this.id = number;
+        if(!(number >= 1 && number <= 9)){
+            addFailHistory(this);
         }
-        if(tag.id >= 1 && tag.id <= 9){
-            return new Tag(0);
-        }
-
-        return tag;
     }
 
-    public static boolean validateId(Tag tag) {
-        return tag.id >= 1 && tag.id <= 9;
+    public static void printHistory() {
+        int createFailCnt = FailHistory.getCreateFailCnt();
+        System.out.println(createFailCnt);
+        AvailableTags.print();
+        FailHistory.print();
+
     }
 
+    private void addFailHistory(Tag tag) {
+        FailHistory.addFailHistory(tag);
+    }
 
     @Override
     public int compareTo(Tag o) {
@@ -47,5 +40,15 @@ public class Tag implements Comparable<Tag> {
     @Override
     public int hashCode() {
         return id;
+    }
+
+    public void execute() {
+        if(id != 0){
+            AvailableTags.addTag(this);
+        }
+    }
+
+    public void fail(){
+        FailHistory.addFailHistory(this);
     }
 }

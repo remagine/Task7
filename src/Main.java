@@ -1,5 +1,5 @@
-import commandandtag.AvailableTags;
 import commandandtag.Command;
+import commandandnumber.CommandAndNumber;
 import commandandtag.CommandAndTag;
 import commandandtag.Tag;
 
@@ -32,36 +32,32 @@ public class Main {
                 "execute 5";
         byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
 
-        try(InputStream inputStream = new ByteArrayInputStream(bytes);
-            InputStream bufferedInputStream = new BufferedInputStream(inputStream, 8192);
-            InputStreamReader inputStreamReader = new InputStreamReader(bufferedInputStream, StandardCharsets.UTF_8);
-            BufferedReader br = new BufferedReader(inputStreamReader, 8192);
-        ){
+        try (InputStream inputStream = new ByteArrayInputStream(bytes);
+             InputStream bufferedInputStream = new BufferedInputStream(inputStream, 8192);
+             InputStreamReader inputStreamReader = new InputStreamReader(bufferedInputStream, StandardCharsets.UTF_8);
+             BufferedReader br = new BufferedReader(inputStreamReader, 8192);
+        ) {
             int count = Integer.parseInt(br.readLine());
-            while(true){
+            while (true) {
                 String input = br.readLine();
-                if(input == null){
+                if (input == null) {
                     break;
                 }
                 String[] inputArray = input.split(" ");
                 Command command = Command.from(inputArray[0]);
-                Tag tag = null;
-                if(inputArray.length == 2){
-                    tag = Tag.from(inputArray[1]);
+                int number = 0;
+                if (inputArray.length == 2) {
+                    number = Integer.parseInt(inputArray[1]);
                 }
-                CommandAndTag commandAndTag = new CommandAndTag(command, tag);
-
-                Tag doneTag = AvailableTags.execute(commandAndTag);
-
-
-
-
-
+                CommandAndNumber commandAndNumber = new CommandAndNumber(command, number);
+                Tag tag = CommandAndTag.getExecuteTag(commandAndNumber);
+                tag.execute();
             }
+
+            Tag.printHistory();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

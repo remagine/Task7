@@ -1,10 +1,14 @@
 package commandandtag;
 
+import commandandnumber.CommandAndNumber;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 public class AvailableTags {
-    private static final ConcurrentSkipListSet<Tag> availableTags = new ConcurrentSkipListSet<>();
-
+    private static final TreeSet<Tag> availableTags = new TreeSet<>();
 
     static {
         for (int i = 1; i < 10; i++) {
@@ -12,31 +16,18 @@ public class AvailableTags {
         }
     }
 
-    public static Tag execute(CommandAndTag commandAndTag) {
-        Command command = commandAndTag.getCommand();
-        Tag tag = commandAndTag.getTag();
-        Tag doneTag = null;
-
-        switch (command) {
-            case CREATE:
-                Tag minTag = availableTags.pollFirst();
-                if (minTag != null) {
-                    doneTag = minTag;
-                }
-                break;
-            case EXECUTE:
-                boolean isValidTag = Tag.validateId(tag);
-                if (isValidTag && availableTags.add(tag)) {
-                    doneTag = tag;
-                }
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + command);
-        }
-        return doneTag;
+    public static Tag getMinTag() {
+        return Optional.ofNullable(availableTags.pollFirst())
+                .orElse(new Tag(0));
     }
 
-    public boolean isAvaiableTag(Tag tag) {
-        return false;
+    public static void addTag(Tag tag) {
+        if (!availableTags.add(tag)) {
+            tag.fail();
+        }
+    }
+
+    public static void print() {
+        System.out.println(availableTags);
     }
 }
