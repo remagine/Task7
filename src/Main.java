@@ -49,14 +49,10 @@ public class Main {
                 if (inputArray.length == 2) {
                     number = Integer.parseInt(inputArray[1]);
                 }
-//              CommandAndNumber commandAndNumber = new CommandAndNumber(command, number);
                 CommandAndTag commandAndTag = new CommandAndTag(command, new Tag(number));
-                //Tag tag = commandAndTag.getTagForCommand();
-                Tag tag = commandAndTag.executeCommand();
-
+                commandAndTag.executeCommand();
             }
             Tag.printHistory();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

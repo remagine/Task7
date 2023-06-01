@@ -17,8 +17,7 @@ public class Tag implements Comparable<Tag> {
     }
 
     public static void printHistory() {
-        int createFailCnt = FailHistory.getCreateFailCnt();
-        System.out.println(createFailCnt);
+        FailHistory.printCreateFailCnt();
         AvailableTags.print();
         FailHistory.print();
     }
@@ -43,11 +42,10 @@ public class Tag implements Comparable<Tag> {
         return id;
     }
 
-    public Tag execute() {
+    public void execute() {
         if(id != 0){
             AvailableTags.addTag(this);
         }
-        return this;
     }
 
     public void fail(){

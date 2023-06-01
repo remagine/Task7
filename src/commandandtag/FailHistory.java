@@ -8,15 +8,10 @@ public class FailHistory {
 
     public static void addFailHistory(Tag tag) {
         Integer failCnt = FAIL_HISTORY.putIfAbsent(tag, 1);
-        if(failCnt != null){
+        if (failCnt != null) {
             FAIL_HISTORY.put(tag, ++failCnt);
         }
     }
-
-    public static int getCreateFailCnt() {
-        return FAIL_MAP.getOrDefault(0,0);
-    }
-
 
     public static void print() {
         FAIL_MAP.remove(0);
@@ -25,8 +20,13 @@ public class FailHistory {
 
     public static void addFailMap(int number) {
         Integer failCnt = FAIL_MAP.putIfAbsent(number, 1);
-        if(failCnt != null){
+        if (failCnt != null) {
             FAIL_MAP.put(number, ++failCnt);
         }
+    }
+
+    public static void printCreateFailCnt() {
+        int createFailCnt = FAIL_MAP.getOrDefault(0, 0);
+        System.out.println(createFailCnt);
     }
 }

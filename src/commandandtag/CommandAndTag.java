@@ -11,30 +11,16 @@ public class CommandAndTag {
         this.tag = tag;
     }
 
-
-    public static CommandAndTag from(CommandAndNumber commandAndNumber) {
-        Command command = commandAndNumber.getCommand();
-        int tagNum = commandAndNumber.getNumber();
+    public void executeCommand() {
         switch (command) {
             case EXECUTE:
-                return new CommandAndTag(command, new Tag(tagNum));
+                tag.execute();
+                break;
             case CREATE:
-                return new CommandAndTag(command, AvailableTags.getMinTag());
+                AvailableTags.getMinTag();
+                break;
             default:
                 throw new IllegalArgumentException();
         }
     }
-
-    public Tag executeCommand() {
-        switch (command) {
-            case EXECUTE:
-                return tag.execute();
-            case CREATE:
-                return AvailableTags.getMinTag();
-            default:
-                throw new IllegalArgumentException();
-        }
-    }
-
-
 }

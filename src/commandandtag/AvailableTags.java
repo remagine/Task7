@@ -1,6 +1,5 @@
 package commandandtag;
 
-import java.util.Optional;
 import java.util.TreeSet;
 
 public class AvailableTags {
