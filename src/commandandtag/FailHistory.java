@@ -1,5 +1,8 @@
 package commandandtag;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FailHistory {
@@ -14,8 +17,9 @@ public class FailHistory {
     }
 
     public static void print() {
-        FAIL_MAP.remove(0);
-        System.out.println(FAIL_MAP);
+        Map<Integer, Integer> copiedMap = new HashMap<>(FAIL_MAP);
+        copiedMap.remove(0);
+        System.out.println(copiedMap);
     }
 
     public static void addFailMap(int number) {
@@ -26,7 +30,8 @@ public class FailHistory {
     }
 
     public static void printCreateFailCnt() {
-        int createFailCnt = FAIL_MAP.getOrDefault(0, 0);
+        Map<Integer, Integer> copiedMap = new HashMap<>(FAIL_MAP);
+        int createFailCnt = copiedMap.getOrDefault(0, 0);
         System.out.println(createFailCnt);
     }
 }
