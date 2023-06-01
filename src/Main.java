@@ -1,5 +1,5 @@
-import commandandtag.Command;
 import commandandnumber.CommandAndNumber;
+import commandandtag.Command;
 import commandandtag.CommandAndTag;
 import commandandtag.Tag;
 
@@ -49,11 +49,12 @@ public class Main {
                 if (inputArray.length == 2) {
                     number = Integer.parseInt(inputArray[1]);
                 }
-                CommandAndNumber commandAndNumber = new CommandAndNumber(command, number);
-                Tag tag = CommandAndTag.getExecuteTag(commandAndNumber);
-                tag.execute();
-            }
+//              CommandAndNumber commandAndNumber = new CommandAndNumber(command, number);
+                CommandAndTag commandAndTag = new CommandAndTag(command, new Tag(number));
+                //Tag tag = commandAndTag.getTagForCommand();
+                Tag tag = commandAndTag.executeCommand();
 
+            }
             Tag.printHistory();
 
         } catch (IOException e) {

@@ -1,11 +1,7 @@
 package commandandtag;
 
-import commandandnumber.CommandAndNumber;
-
-import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeSet;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 public class AvailableTags {
     private static final TreeSet<Tag> availableTags = new TreeSet<>();
@@ -17,14 +13,18 @@ public class AvailableTags {
     }
 
     public static Tag getMinTag() {
-        return Optional.ofNullable(availableTags.pollFirst())
-                .orElse(new Tag(0));
+        Tag minTag = availableTags.pollFirst();
+        if (minTag == null) {
+            FailHistory.addFailMap(0);
+        }
+        return minTag;
     }
 
-    public static void addTag(Tag tag) {
+    public static Tag addTag(Tag tag) {
         if (!availableTags.add(tag)) {
             tag.fail();
         }
+        return tag;
     }
 
     public static void print() {

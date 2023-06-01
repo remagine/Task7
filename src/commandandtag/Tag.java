@@ -4,10 +4,16 @@ public class Tag implements Comparable<Tag> {
     private final int id;
 
     public Tag(int number) {
-        this.id = number;
-        if(!(number >= 1 && number <= 9)){
-            addFailHistory(this);
+        if(!(number >= 0 && number <= 9)){
+            this.id = 0;
+            fail(number);
+        } else {
+            this.id = number;
         }
+    }
+
+    private void fail(int number) {
+        FailHistory.addFailMap(number);
     }
 
     public static void printHistory() {
@@ -15,11 +21,6 @@ public class Tag implements Comparable<Tag> {
         System.out.println(createFailCnt);
         AvailableTags.print();
         FailHistory.print();
-
-    }
-
-    private void addFailHistory(Tag tag) {
-        FailHistory.addFailHistory(tag);
     }
 
     @Override
@@ -42,13 +43,14 @@ public class Tag implements Comparable<Tag> {
         return id;
     }
 
-    public void execute() {
+    public Tag execute() {
         if(id != 0){
             AvailableTags.addTag(this);
         }
+        return this;
     }
 
     public void fail(){
-        FailHistory.addFailHistory(this);
+        FailHistory.addFailMap(id);
     }
 }
