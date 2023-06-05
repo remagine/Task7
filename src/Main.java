@@ -49,7 +49,8 @@ public class Main {
                 if (inputArray.length == 2) {
                     number = Integer.parseInt(inputArray[1]);
                 }
-                CommandAndTag commandAndTag = new CommandAndTag(command, new Tag(number));
+                Tag tag = new Tag(number);
+                CommandAndTag commandAndTag = new CommandAndTag(command, tag);
                 commandAndTag.executeCommand();
             }
             Tag.printHistory();

@@ -4,7 +4,7 @@ public class Tag implements Comparable<Tag> {
     private final int id;
 
     public Tag(int number) {
-        if(!(number >= 0 && number <= 9)){
+        if (number < 0 || number > 9) {
             this.id = 0;
             fail(number);
         } else {
@@ -14,6 +14,10 @@ public class Tag implements Comparable<Tag> {
 
     private void fail(int number) {
         FailHistory.addFailMap(number);
+    }
+
+    public void fail() {
+        FailHistory.addFailMap(id);
     }
 
     public static void printHistory() {
@@ -43,12 +47,12 @@ public class Tag implements Comparable<Tag> {
     }
 
     public void execute() {
-        if(id != 0){
+        if (id != 0) {
             AvailableTags.addTag(this);
         }
     }
 
-    public void fail(){
-        FailHistory.addFailMap(id);
+    public void create() {
+        AvailableTags.getMinTag();
     }
 }

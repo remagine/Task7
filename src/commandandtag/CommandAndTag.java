@@ -17,7 +17,7 @@ public class CommandAndTag {
                 tag.execute();
                 break;
             case CREATE:
-                AvailableTags.getMinTag();
+                tag.create();
                 break;
             default:
                 throw new IllegalArgumentException();
